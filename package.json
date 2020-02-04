@@ -1,0 +1,29 @@
+{
+  "name": "puppy-editor",
+  "version": "0.9.0",
+  "description": "puppy editor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/playpuppy/puppy-editor.git"
+  },
+  "keywords": [
+    "editor"
+  ],
+  "author": "Kimio Kuramitsu <kkuramitsu@gmail.com> (https://github.com/kkuramitsu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/playpuppy/puppy-editor/issues"
+  },
+  "homepage": "https://github.com/playpuppy/puppy-editor#readme",
+  "devDependencies": {
+    "@types/node": "^13.7.0",
+    "monaco-editor": "^0.19.3",
+    "parcel": "^1.12.4",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  }
+}
