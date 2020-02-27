@@ -5,6 +5,7 @@ import {
   CancellationToken,
   Position,
   MarkerSeverity,
+  IRange,
 } from 'monaco-editor';
 //import { PuppyOS } from '../puppyos/os';
 
@@ -47,63 +48,49 @@ editor.defineTheme('puppy', {
 
 editor.setTheme('puppy');
 
-// languages.registerCodeActionProvider('python', {
-//   provideCodeActions: (
-//     model: editor.ITextModel,
-//     range: Range,
-//     context: languages.CodeActionContext,
-//     _token: CancellationToken
-//   ) => {
-//     const codeActions: Promise<languages.CodeAction>[] = [];
-//     for (const mk of context.markers) {
-//       switch (mk.code) {
-//         case 'NLKeyValues': {
-//           const NLPSymbol = mk.source;
-//           if (NLPSymbol) {
-//             codeActions.push(
-//               callKoinu(NLPSymbol).then(json => {
-//                 console.log(json);
-//                 const key = Object.keys(json)[0];
-//                 let text = '';
-//                 if (key == 'shape') {
-//                   text = json[key];
-//                 } else if (key == 'color') {
-//                   text = `fillStyle="${json[key]}"`;
-//                 } else {
-//                   text = `${key}=${
-//                     typeof json[key] == 'string' ? `"${json[key]}"` : json[key]
-//                     }`;
-//                 }
-//                 return {
-//                   title: `もしかして「${text}」ですか？`,
-//                   edit: {
-//                     edits: [
-//                       {
-//                         edits: [
-//                           {
-//                             range,
-//                             text,
-//                           },
-//                         ],
-//                         resource: model.uri,
-//                       },
-//                     ],
-//                   },
-//                   kind: 'quickfix',
-//                   isPreferred: true,
-//                 };
-//               })
-//             );
-//           }
-//           break;
-//         }
-//         default:
-//           break;
-//       }
-//     }
-//     return Promise.all(codeActions);
-//   },
-// });
+languages.registerCodeActionProvider('python', {
+  provideCodeActions: (
+    model: editor.ITextModel,
+    range: Range,
+    context: languages.CodeActionContext,
+    _token: CancellationToken
+  ) => {
+    const codeActions: languages.CodeAction[] = [];
+    for (const mk of context.markers) {
+      switch (mk.code) {
+        case 'XX': {
+          const NLPSymbol = mk.source;
+          if (NLPSymbol) {
+            const koinuCodeaction = {
+              title: `もしかして「」ですか？`,
+              edit: {
+                edits: [
+                  {
+                    edits: [
+                      {
+                        range,
+                        text: "テキスト",
+                      },
+                    ],
+                    resource: model.uri,
+                  },
+                ],
+              },
+              kind: 'quickfix',
+              isPreferred: true,
+            }
+            codeActions.push(koinuCodeaction)
+            codeActions.push(koinuCodeaction)
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    }
+    return {actions: codeActions, dispose: () => {}};
+  },
+});
 
 languages.registerCompletionItemProvider('python', {
   provideCompletionItems: (
@@ -308,6 +295,7 @@ export class PuppyEditor {
   callback: ((source: string) => void) | null = null;
 
   public constructor(element: HTMLElement, options: any = {}) {
+    options = {lightbulb: {enable: true}} || options
     this.editor = editor.create(element, options);
     if (options.os) {
       this.os = options.os;
@@ -360,7 +348,7 @@ export class PuppyEditor {
     console.log(this.decorations);
   }
 
-  private marker(range: any) {
+  private marker(range: IRange) {
     const markerData: editor.IMarkerData = {
       severity: MarkerSeverity.Hint,
       startLineNumber: range.startLineNumber,
@@ -368,7 +356,7 @@ export class PuppyEditor {
       endLineNumber: range.endLineNumber,
       endColumn: range.endColumn,
       code: 'XX',
-      source: '',
+      source: 'test',
       message: '全角文字です',
     }
     return markerData;
