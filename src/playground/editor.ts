@@ -5,21 +5,11 @@ import {
   CancellationToken,
   Position,
   MarkerSeverity,
+  IRange,
 } from 'monaco-editor';
-//import { PuppyOS } from '../puppyos/os';
-
-// session = monaco.editor.createModel(text, "javascript");
-// editor1 = monaco.editor.create(document.getElementById('container1'), {});
-// editor2 = monaco.editor.create(document.getElementById('container2'), {});
-// editor1.setModel(session);
-// editor2.setModel(session);
 
 export type CodeEditor = editor.IStandaloneCodeEditor;
 export type ContentChangedEvent = editor.IModelContentChangedEvent;
-
-// import { callKoinu } from './koinu';
-// import { ErrorLog, PuppyVM } from '@playpuppy/puppy2d';
-// import { messagefy } from '../lang/code';
 
 editor.defineTheme('error', {
   base: 'vs',
@@ -46,64 +36,6 @@ editor.defineTheme('puppy', {
 });
 
 editor.setTheme('puppy');
-
-// languages.registerCodeActionProvider('python', {
-//   provideCodeActions: (
-//     model: editor.ITextModel,
-//     range: Range,
-//     context: languages.CodeActionContext,
-//     _token: CancellationToken
-//   ) => {
-//     const codeActions: Promise<languages.CodeAction>[] = [];
-//     for (const mk of context.markers) {
-//       switch (mk.code) {
-//         case 'NLKeyValues': {
-//           const NLPSymbol = mk.source;
-//           if (NLPSymbol) {
-//             codeActions.push(
-//               callKoinu(NLPSymbol).then(json => {
-//                 console.log(json);
-//                 const key = Object.keys(json)[0];
-//                 let text = '';
-//                 if (key == 'shape') {
-//                   text = json[key];
-//                 } else if (key == 'color') {
-//                   text = `fillStyle="${json[key]}"`;
-//                 } else {
-//                   text = `${key}=${
-//                     typeof json[key] == 'string' ? `"${json[key]}"` : json[key]
-//                     }`;
-//                 }
-//                 return {
-//                   title: `もしかして「${text}」ですか？`,
-//                   edit: {
-//                     edits: [
-//                       {
-//                         edits: [
-//                           {
-//                             range,
-//                             text,
-//                           },
-//                         ],
-//                         resource: model.uri,
-//                       },
-//                     ],
-//                   },
-//                   kind: 'quickfix',
-//                   isPreferred: true,
-//                 };
-//               })
-//             );
-//           }
-//           break;
-//         }
-//         default:
-//           break;
-//       }
-//     }
-//     return Promise.all(codeActions);
-//   },
-// });
 
 languages.registerCompletionItemProvider('python', {
   provideCompletionItems: (
@@ -199,13 +131,17 @@ languages.registerCompletionItemProvider('python', {
   },
 });
 
-languages.register({ id: 'puppyConsoleLanguage' });
+type PuppyEditorOptions = {
+  editorCondstructionOptions?: editor.IStandaloneEditorConstructionOptions
+  os?: any,
+  puppyCodeAction?: PuppyCodeAction
+}
 
-languages.setMonarchTokensProvider('puppyConsoleLanguage', {
-  tokenizer: {
-    root: [[/"[^"]*"/, 'string']],
-  },
-});
+type PuppyCodeAction = {
+  koinuCodeAction?: KoinuCodeAction
+};
+
+type KoinuCodeAction = (source: string) => string;
 
 const zenkaku =
   '[！　”＃＄％＆’（）＊＋，－．／：；＜＝＞？＠［＼￥］＾＿‘｛｜｝～￣' +
@@ -214,103 +150,23 @@ const zenkaku =
   '１２３４５６７８９０' +
   '｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾉﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟ]';
 
-const checkZenkaku = (
-  codeEditor: CodeEditor,
-  decos: string[],
-  setDecos: (decos: string[]) => void
-) => {
-  const zenkakuRanges = codeEditor
-    .getModel()!
-    .findMatches(zenkaku, true, true, false, null, false);
-  const _decos: editor.IModelDeltaDecoration[] = zenkakuRanges.map(
-    (match: editor.FindMatch) => ({
-      range: match.range,
-      options: { inlineClassName: 'zenkakuClass' },
-    })
-  );
-  setDecos(codeEditor.deltaDecorations(decos, _decos));
-};
-
-// export const onChange = (
-//   codeEditor: CodeEditor | null,
-//   setSource: (source: string) => void,
-//   decos: string[],
-//   setDecos: (decos: string[]) => void,
-//   puppy: PuppyVM | null,
-//   codeChangeTimer: NodeJS.Timer | null,
-//   setCodeChangeTimer: React.Dispatch<React.SetStateAction<NodeJS.Timer | null>>
-// ) => (source: string, _event: editor.IModelContentChangedEvent) => {
-//   if (codeEditor) {
-//     checkZenkaku(codeEditor, decos, setDecos);
-//   }
-//   setSource(source);
-//   if (codeChangeTimer) {
-//     clearTimeout(codeChangeTimer);
-//   }
-//   if (puppy) {
-//     setCodeChangeTimer(
-//       setTimeout(() => {
-//         puppy.load(source, false);
-//       }, 500)
-//     );
-//   }
-// };
-
-export const editorDidMount = (setEditor: (editor: CodeEditor) => void) => (
-  editor: CodeEditor
-) => {
-  setEditor(editor);
-};
-
-export const fontPlus = (
-  fontSize: number,
-  setFontSize: (fontSize: number) => void
-) => () => {
-  setFontSize(fontSize + 3);
-};
-
-export const fontMinus = (
-  fontSize: number,
-  setFontSize: (fontSize: number) => void
-) => () => {
-  setFontSize(Math.max(12, fontSize - 3));
-};
-
-// export const setModelMarkers = editor.setModelMarkers;
-
-
-// export const setCodeHighLight = (
-//   setHighLight: React.Dispatch<React.SetStateAction<string[]>>,
-//   codeEditor: CodeEditor
-// ) => (startLineNum: number, endLineNum: number) => {
-//   setHighLight(hl =>
-//     codeEditor.deltaDecorations(hl, [
-//       {
-//         range: new Range(startLineNum, 1, endLineNum, 1),
-//         options: { isWholeLine: true, className: 'code-highlight' },
-//       },
-//     ])
-//   );
-// };
-
-// export const resetCodeHighLight = (
-//   setHighLight: React.Dispatch<React.SetStateAction<string[]>>,
-//   codeEditor: CodeEditor
-// ) => () => {
-//   setHighLight(hl => codeEditor.deltaDecorations(hl, []));
-// };
-
 export class PuppyEditor {
   os: any;
   editor: editor.IStandaloneCodeEditor;
   time: number = 500;
   timer: NodeJS.Timeout | null = null;
   callback: ((source: string) => void) | null = null;
+  puppyCodeAction: PuppyCodeAction | undefined;
 
-  public constructor(element: HTMLElement, options: any = {}) {
-    this.editor = editor.create(element, options);
+  public constructor(element: HTMLElement, options: PuppyEditorOptions = {}) {
+    options.editorCondstructionOptions = {lightbulb: {enabled: true}} || options.editorCondstructionOptions
+    this.editor = editor.create(element, options.editorCondstructionOptions);
     if (options.os) {
       this.os = options.os;
+    }
+    this.puppyCodeAction = options.puppyCodeAction
+    if(this.puppyCodeAction) {
+      this.initCodeAction(this.puppyCodeAction)
     }
     this.editor.onDidChangeModelContent((e) => {
       const changes = e.changes;
@@ -331,6 +187,52 @@ export class PuppyEditor {
           callback(this.editor.getValue());
         }, this.time);
       }
+    });
+  }
+
+  public initCodeAction(codeAction = this.puppyCodeAction) {
+    languages.registerCodeActionProvider('python', {
+      provideCodeActions: (
+        model: editor.ITextModel,
+        range: Range,
+        context: languages.CodeActionContext,
+        _token: CancellationToken
+      ) => {
+        const codeActions: languages.CodeAction[] = [];
+        for (const mk of context.markers) {
+          switch (mk.code) {
+            case 'Koinu': {
+              const source = mk.source;
+              if (source && codeAction && codeAction.koinuCodeAction) {
+                const koinuCodeaction = {
+                  title: `もしかして「」ですか？`,
+                  edit: {
+                    edits: [
+                      {
+                        edits: [
+                          {
+                            range,
+                            text: codeAction.koinuCodeAction(source),
+                          },
+                        ],
+                        resource: model.uri,
+                      },
+                    ],
+                  },
+                  kind: 'quickfix',
+                  isPreferred: true,
+                }
+                codeActions.push(koinuCodeaction)
+                codeActions.push(koinuCodeaction)
+              }
+              break;
+            }
+            default:
+              break;
+          }
+        }
+        return {actions: codeActions, dispose: () => {}};
+      },
     });
   }
 
@@ -360,15 +262,15 @@ export class PuppyEditor {
     console.log(this.decorations);
   }
 
-  private marker(range: any) {
+  private marker(range: IRange) {
     const markerData: editor.IMarkerData = {
       severity: MarkerSeverity.Hint,
       startLineNumber: range.startLineNumber,
       startColumn: range.startColumn,
       endLineNumber: range.endLineNumber,
       endColumn: range.endColumn,
-      code: 'XX',
-      source: '',
+      code: 'Koinu',
+      source: 'test',
       message: '全角文字です',
     }
     return markerData;
