@@ -2,7 +2,7 @@
   "name": "@playpuppy/puppy-editor",
   "version": "0.0.1",
   "description": "puppy editor",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
