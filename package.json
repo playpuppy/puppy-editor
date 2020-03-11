@@ -1,9 +1,11 @@
 {
-  "name": "puppy-editor",
-  "version": "0.9.0",
+  "name": "@playpuppy/puppy-editor",
+  "version": "0.0.0",
   "description": "puppy editor",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
