@@ -1,8 +1,8 @@
 
 //import { Common } from './core';
 
-export { PuppyOS, PuppyVM } from './puppyvm/vm';
-export { SourceEvent as ErrorLog } from './lang/code';
+export * from './playground/editor';
+export * from './playground/viewer';
 
 //const os = new PuppyOS();
 //const puppy = new PuppyVM(document.body, { os });
