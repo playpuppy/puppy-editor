@@ -1,6 +1,6 @@
 {
   "name": "@playpuppy/puppy-editor",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "puppy editor",
   "main": "./dist/index.js",
   "scripts": {
