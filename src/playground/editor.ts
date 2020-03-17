@@ -135,7 +135,7 @@ type PuppyEditorOptions = {
   editorCondstructionOptions?: editor.IStandaloneEditorConstructionOptions
   os?: any,
   messagefy?: (log: any) => string,
-  callback?: (source: string) => string,
+  callback?: (source: string) => void,
   puppyCodeAction?: PuppyCodeAction
 }
 
