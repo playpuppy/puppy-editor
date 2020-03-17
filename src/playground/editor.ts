@@ -134,7 +134,8 @@ languages.registerCompletionItemProvider('python', {
 type PuppyEditorOptions = {
   editorCondstructionOptions?: editor.IStandaloneEditorConstructionOptions
   os?: any,
-  messagefy?: (key: string) => string,
+  messagefy?: (log: any) => string,
+  callback?: (source: string) => string,
   puppyCodeAction?: PuppyCodeAction
 }
 
@@ -170,6 +171,9 @@ export class PuppyEditor {
     if (options.messagefy) {
       this.messagefy = options.messagefy
     }
+    if (options.callback) {
+      this.callback = options.callback
+    }
     this.puppyCodeAction = options.puppyCodeAction
     if(this.puppyCodeAction) {
       this.initCodeAction(this.puppyCodeAction)
@@ -181,7 +185,7 @@ export class PuppyEditor {
         if (change.text.length >= 1) {
           this.checkZenkaku();
         }
-        editor.setModelMarkers(this.editor.getModel()!, 'hoge', [this.marker(change.range)]);
+         //editor.setModelMarkers(this.editor.getModel()!, 'hoge', [this.marker(change.range)]);
       }
       if (this.timer) {
         clearTimeout(this.timer);
@@ -229,7 +233,9 @@ export class PuppyEditor {
                   kind: 'quickfix',
                   isPreferred: true,
                 }
-                codeActions.push(koinuCodeaction)
+                if(suggest !== '') {
+                  codeActions.push(koinuCodeaction)
+                }
               }
               break;
             }
