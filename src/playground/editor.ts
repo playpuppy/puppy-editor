@@ -134,6 +134,8 @@ languages.registerCompletionItemProvider('python', {
 type PuppyEditorOptions = {
   editorCondstructionOptions?: editor.IStandaloneEditorConstructionOptions
   os?: any,
+  messagefy?: (log: any) => string,
+  callback?: (source: string) => void,
   puppyCodeAction?: PuppyCodeAction
 }
 
@@ -156,13 +158,21 @@ export class PuppyEditor {
   time: number = 500;
   timer: NodeJS.Timeout | null = null;
   callback: ((source: string) => void) | null = null;
+  messagefy: (key: string) => string = (key) => key;
   puppyCodeAction: PuppyCodeAction | undefined;
+  fontSize: number = 20
 
   public constructor(element: HTMLElement, options: PuppyEditorOptions = {}) {
-    options.editorCondstructionOptions = {lightbulb: {enabled: true}} || options.editorCondstructionOptions
+    options.editorCondstructionOptions = {lightbulb: {enabled: true}, fontSize: this.fontSize} || options.editorCondstructionOptions
     this.editor = editor.create(element, options.editorCondstructionOptions);
     if (options.os) {
       this.os = options.os;
+    }
+    if (options.messagefy) {
+      this.messagefy = options.messagefy
+    }
+    if (options.callback) {
+      this.callback = options.callback
     }
     this.puppyCodeAction = options.puppyCodeAction
     if(this.puppyCodeAction) {
@@ -175,7 +185,7 @@ export class PuppyEditor {
         if (change.text.length >= 1) {
           this.checkZenkaku();
         }
-        editor.setModelMarkers(this.editor.getModel()!, 'hoge', [this.marker(change.range)]);
+         //editor.setModelMarkers(this.editor.getModel()!, 'hoge', [this.marker(change.range)]);
       }
       if (this.timer) {
         clearTimeout(this.timer);
@@ -201,18 +211,19 @@ export class PuppyEditor {
         const codeActions: languages.CodeAction[] = [];
         for (const mk of context.markers) {
           switch (mk.code) {
-            case 'Koinu': {
+            case 'NLKeyValues': {
               const source = mk.source;
               if (source && codeAction && codeAction.koinuCodeAction) {
+                const suggest = codeAction.koinuCodeAction(source);
                 const koinuCodeaction = {
-                  title: `もしかして「」ですか？`,
+                  title: `もしかして「${suggest}」ですか？`,
                   edit: {
                     edits: [
                       {
                         edits: [
                           {
                             range,
-                            text: codeAction.koinuCodeAction(source),
+                            text: suggest,
                           },
                         ],
                         resource: model.uri,
@@ -222,8 +233,9 @@ export class PuppyEditor {
                   kind: 'quickfix',
                   isPreferred: true,
                 }
-                codeActions.push(koinuCodeaction)
-                codeActions.push(koinuCodeaction)
+                if(suggest !== '') {
+                  codeActions.push(koinuCodeaction)
+                }
               }
               break;
             }
@@ -308,8 +320,12 @@ export class PuppyEditor {
     }
   }
 
-  private messagefy(log: any) {
-    return log.key;
+  public fontPlus(size: number = 3) {
+    this.fontSize += size
+  }
+
+  public fontMinus(size: number = 3) {
+    this.fontSize -= size
   }
 
   public addLineHighLight(startLineNum: number, endLineNum: number, cssClass = 'highlight') {
