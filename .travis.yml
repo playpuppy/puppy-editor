@@ -23,5 +23,5 @@ deploy:
   on:
     branch: master
     tags: true
-    repo: tdtk/puppy-editor
+    repo: playpuppy/puppy-editor
   skip_cleanup: 'true'
