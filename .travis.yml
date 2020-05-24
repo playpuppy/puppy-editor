@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - 12
+  - 13
+  - 14
+
+branches:
+  only:
+    - "master"
+    - "develop"
+    - "/^v\\d\\.\\d\\.\\d/"
+
+before_script:
+  - "npm i -g"
+script:
+  - "npm run test"
+
+deploy:
+  provider: npm
+  email: tadataku.lab@gmail.com
+  api_key:
+    secure: k5ZISHdk1mh9i9sqBK0Nt1LCe/1o2KNK8js2Ras5yymqEoUhU9gm/ApHrXcwA63iCxjfcTTFT7PkJfYlS8CGgs9wbTq2a8+xueYiA+65cXopXHCWPmxK80F1KDN2IDWUNxrQts6u1XI219mz0xXbY0Ru6w2W0D7GUuj8u/uKIFsbypwr+gsDOn/cC20ZM2PEkhPjBfyPZhlQMYNeNEFOYXRg/WZO2F5foh6vct0htuSQkqChJpVwKEvdZSbmy80YJNxUjG3Pf6LoYGS0WNGQVrmmQLESOS+AnL+aS278hNE1fnV09FXuo5HBmGs9+LPL0jtAkEL5fQA99JlX5tVbn/LIoGN9SgJEtwUmXq7t4guwPWnsJBNYtutl4jZHiO7BgyPeVDNl1hBeBLOCOi5f/vvEJN7mbvowuf+Gpu0Z8lnMlM/VNKqlfzY3Yngq/F/2c6opJ+odZPqSS1emARaQKnC6w+ahdVkIZWm9n2XbPPioZNezqq/Ff7CUnejKZzPcP/o6VLRs/D2lhcaY5EYPWe2LpIzMBEHxRFM9J/voakHXuZ84C4gayYOK3d34D9Gt7lkxO5tGtyEQUteGPcK1P+bYiID/cpiJZoykgSUh+SFHgkfFqqfu/+GCMqUQeaYIGYEI+f7Elkj1wHZ+1r3JuqkEnt7SVZvjdv139PucrTo=
+  on:
+    branch: master
+    tags: true
+    repo: tdtk/puppy-editor
+  skip_cleanup: 'true'
