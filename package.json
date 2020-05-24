@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
+    "postversion": "git push origin $(git describe --abbrev=0 --tags)",
     "test": "jest"
   },
   "repository": {
