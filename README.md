@@ -2,3 +2,17 @@
 
 # puppy-editor
 puppy-editor
+
+# install
+
+```
+npm install @playpuppy/puppy-editor
+```
+
+# for developers
+
+You can start debugging on web.
+
+```
+npm start
+```
