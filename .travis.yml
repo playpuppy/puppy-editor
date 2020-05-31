@@ -12,11 +12,3 @@ before_script:
 - npm i -g
 script:
 - npm run test
-deploy:
-  provider: npm
-  email: tadataku.lab@gmail.com
-  api_key:
-    secure: YIVH/KbX9dLW1BVZscHY/qOSrdJPuv4VbVxLfJZH3GjHMU5QKjM/JDRXRZ7SvnkVmzcRO8IJGzcUkbiuVdQMvyAtabIvshZtZB58yI0dTBOth+r4MHLtvCmHwwmmpmK53RQwo7JEFvlHaGtbVe4wolMxyGM2GxREpOWwRz52lT/b+0/p1ndFeJ29k9cTVyx1JbVu0QI78FD62nBKr0s27Ql3xhB0UCEY0GFPmjO3NVDd27cYJbtANOdVo/7Yyq84Dm6sr2j6gB3N0xOdsOVb2TrOOAtGUaYGTJAn6+HaNcy7V6QxioG0C8vAvQ5wyRFILq56I+UQ1Kes1KFIzTnFPpklcQAZTFI/HqF6afZN74N7us5qWt8BOBpwHSMR8Qm7MdIZ26gUUdAGmXo94U1IS7dLfd/t+Gjug81t3/W0PPHdUtceUHailcNCt8JWVE+Qx8lrbJcXfw8HgXem+L7ElK11jF72D4CN+X75sS1KH5QXaJPHaZ/Js2a5pPo5wmkemdI6HhkbdDpbCoWZpu8R3LceJ7BSSZOQd6DBZnckAQYAiqEHSP6aYvWA+BYAkUmo85peZIQ1e4xSkwngqn/LA/A203jN8h73mylRkSEcGs2rxJzNwawDwjimfbd3uJpZzju+BAFLdbLq+CGuRsuGRJJq3TVZzPDjjAzyITppS44=
-  on:
-    tags: true
-  skip_cleanup: 'true'
