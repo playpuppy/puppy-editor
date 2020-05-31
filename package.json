@@ -1,12 +1,11 @@
 {
   "name": "@playpuppy/puppy-editor",
-  "version": "0.0.15",
+  "version": "0.0.17",
   "description": "puppy editor",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "postversion": "git push upstream $(git describe --abbrev=0 --tags)",
     "test": "jest"
   },
   "repository": {
