@@ -26,6 +26,8 @@
   },
   "homepage": "https://github.com/playpuppy/puppy-editor#readme",
   "devDependencies": {
+    "@babel/plugin-syntax-flow": "^7.10.1",
+    "@babel/preset-flow": "^7.10.1",
     "@babel/preset-typescript": "^7.10.1",
     "@types/jest": "^25.2.3",
     "@types/markdown-it": "0.0.9",
