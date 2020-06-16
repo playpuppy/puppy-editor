@@ -193,9 +193,9 @@ export class PuppyEditor {
       }
       if (this.callback) {
         const callback = this.callback;
-        this.timer = setTimeout(() => {
-          callback(this.editor.getValue());
-        }, this.time);
+        // this.timer = setTimeout(() => {
+        //   callback(this.editor.getValue());
+        // }, this.time);
       }
     });
   }
