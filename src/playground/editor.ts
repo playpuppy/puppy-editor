@@ -163,7 +163,7 @@ export class PuppyEditor {
   fontSize: number = 20
 
   public constructor(element: HTMLElement, options: PuppyEditorOptions = {}) {
-    options.editorCondstructionOptions = {lightbulb: {enabled: true}, fontSize: this.fontSize} || options.editorCondstructionOptions
+    options.editorCondstructionOptions = { lightbulb: { enabled: true }, fontSize: this.fontSize } || options.editorCondstructionOptions
     this.editor = editor.create(element, options.editorCondstructionOptions);
     if (options.os) {
       this.os = options.os;
@@ -175,7 +175,7 @@ export class PuppyEditor {
       this.callback = options.callback
     }
     this.puppyCodeAction = options.puppyCodeAction
-    if(this.puppyCodeAction) {
+    if (this.puppyCodeAction) {
       this.initCodeAction(this.puppyCodeAction)
     }
     this.editor.onDidChangeModelContent((e) => {
@@ -185,7 +185,7 @@ export class PuppyEditor {
         if (change.text.length >= 1) {
           this.checkZenkaku();
         }
-         //editor.setModelMarkers(this.editor.getModel()!, 'hoge', [this.marker(change.range)]);
+        //editor.setModelMarkers(this.editor.getModel()!, 'hoge', [this.marker(change.range)]);
       }
       if (this.timer) {
         clearTimeout(this.timer);
@@ -193,9 +193,9 @@ export class PuppyEditor {
       }
       if (this.callback) {
         const callback = this.callback;
-        this.timer = setTimeout(() => {
-          callback(this.editor.getValue());
-        }, this.time);
+        // this.timer = setTimeout(() => {
+        //   callback(this.editor.getValue());
+        // }, this.time);
       }
     });
   }
@@ -233,8 +233,8 @@ export class PuppyEditor {
                   kind: 'quickfix',
                   isPreferred: true,
                 }
-                if(suggest !== '') {
-                  codeActions.push(koinuCodeaction)
+                if (suggest !== '') {
+                  //codeActions.push(koinuCodeaction)
                 }
               }
               break;
@@ -243,9 +243,17 @@ export class PuppyEditor {
               break;
           }
         }
-        return {actions: codeActions, dispose: () => {}};
+        return { actions: codeActions, dispose: () => { } };
       },
     });
+  }
+
+  public getValue(): string {
+    return this.editor.getValue()
+  }
+
+  public setValue(value: string) {
+    this.editor.setValue(value)
   }
 
   public setModel(source: string, langid: string) {

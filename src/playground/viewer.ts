@@ -1,4 +1,4 @@
-import 'katex/dist/katex.min.css'   // *** 必須です！
+// import 'katex/dist/katex.min.css'   // *** 必須です！
 import MarkdownIt from 'markdown-it';
 //import mk from 'markdown-it-katex';
 const mk = require('markdown-it-katex');
