@@ -234,7 +234,7 @@ export class PuppyEditor {
                   isPreferred: true,
                 }
                 if (suggest !== '') {
-                  codeActions.push(koinuCodeaction)
+                  //codeActions.push(koinuCodeaction)
                 }
               }
               break;
