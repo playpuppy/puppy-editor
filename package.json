@@ -8,7 +8,7 @@
     "start": "parcel index.html --open",
     "prepublishOnly": "npm run build",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint:fix": "eslint --fix src/**/*",
     "test": "jest",
     "lint-staged": "lint-staged"
   },
@@ -92,10 +92,10 @@
     "lint-staged"
   ],
   "lint-staged": {
-    "*.{js,jsx}": [
+    "src/**/*.{js,jsx}": [
       "eslint --fix"
     ],
-    "*.{css,scss}": [
+    "src/**/*.{css,scss}": [
       "stylelint"
     ]
   }
