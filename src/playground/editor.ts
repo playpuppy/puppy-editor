@@ -252,7 +252,7 @@ export class PuppyEditor {
         //       break;
         //   }
         // }
-        return { actions: codeActions, dispose: null };
+        return { actions: codeActions, dispose: () => { } };
       },
     });
   }

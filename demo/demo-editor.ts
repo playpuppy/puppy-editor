@@ -1,9 +1,9 @@
 //import { PuppyVM, PuppyCode, PuppyWorld } from './puppyvm/vm';
-import { PuppyEditor } from './playground/editor';
+import { PuppyEditor } from '../dist/playground/editor';
 
 const editor = new PuppyEditor(
   document.body,
-  {puppyCodeAction: {koinuCodeAction: (source) => source}}
+  { puppyCodeAction: { koinuCodeAction: (source) => source } }
 );
 editor.setModel(`
 print('Hello, World')
