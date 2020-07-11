@@ -3,7 +3,8 @@
 # check this version is enable to release or not
 npx can-npm-publish
 if [ $? -eq 1 ] ; then
-  exit 255
+  echo "cannot publish"
+  exit 0
 fi
 
 # get current version from package.json
