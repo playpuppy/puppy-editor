@@ -270,7 +270,6 @@ export class PuppyEditor {
   * Set the input string of the editor.
   * 
   * @param value - The editor string
-  * @returns void
   */
   public setValue(value: string) {
     this.editor.setValue(value);
