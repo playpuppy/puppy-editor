@@ -257,10 +257,21 @@ export class PuppyEditor {
     });
   }
 
+  /**
+   * Return the input string of the editor.
+   * 
+   * @returns The editor string
+   */
   public getValue(): string {
     return this.editor.getValue();
   }
 
+  /**
+  * Set the input string of the editor.
+  * 
+  * @param value - The editor string
+  * @returns void
+  */
   public setValue(value: string) {
     this.editor.setValue(value);
   }
