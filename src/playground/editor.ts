@@ -347,12 +347,31 @@ export class PuppyEditor {
     }
   }
 
-  public fontPlus(size = 3) {
-    this.fontSize += size;
+  /**
+  * Get the font size of the editor.
+  * 
+  * @return the font size
+  */
+  public getFontSize(): number {
+    return this.fontSize;
   }
 
-  public fontMinus(size = 3) {
-    this.fontSize -= size;
+  /**
+  * Set font size of the editor.
+  * 
+  * @param size - font size
+  */
+  public setFontSize(size: number) {
+    this.fontSize = size;
+  }
+
+  /**
+  * Add font size of the editor.
+  * 
+  * @param num - number of added font size
+  */
+  public addFontSize(num: number) {
+    this.fontSize += num;
   }
 
   public addLineHighLight(startLineNum: number, endLineNum: number, cssClass = 'highlight') {
