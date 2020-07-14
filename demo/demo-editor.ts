@@ -2,7 +2,7 @@
 import { PuppyEditor } from '../dist/playground/editor';
 
 const editor = new PuppyEditor(
-  document.body,
+  document.getElementById("editor"),
   { puppyCodeAction: { koinuCodeAction: (source) => source } }
 );
 editor.setModel(`
