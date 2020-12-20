@@ -13,3 +13,10 @@ def __keyup__(key, time):
 `, "python");
 editor.addLineHighLight(2, 2);
 
+const fontSizeControlerElement = document.getElementById("controlFontSize");
+
+editor.setFontSize(30)
+
+fontSizeControlerElement.oninput = (ev: Event) => {
+  editor.setFontSize(ev.target["value"]);
+};

@@ -14,6 +14,35 @@
     .zenkaku {
       background: lightcoral;
     }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      position: relative;
+      display: block;
+      background-color: var(--dark);
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+    }
+
+    input[type=range]:focus::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      position: relative;
+      display: block;
+      background-color: var(--dark);
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, .6);
+      transition: .4s;
+    }
+
+    input[type=range]:active::-webkit-slider-thumb {
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, .6);
+      transition: .4s;
+    }
   </style>
 </head>
 
@@ -28,7 +57,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="https://www.npmjs.com/package/@playpuppy/puppy-editor">Install (npm)</a>
+          <a class="nav-link" href="https://www.npmjs.com/package/@playpuppy/puppy-editor">Install</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./docs">API Doc</a>
@@ -46,7 +75,12 @@
         <div id='editor' style="width: 100%; height: 100%;"></div>
       </div>
       <div class="col-sm">
-
+        <form>
+          <div class="form-group">
+            <label for="controlFontSize">Font Size</label>
+            <input type="range" class="custom-range" id="controlFontSize">
+          </div>
+        </form>
       </div>
     </div>
   </div>

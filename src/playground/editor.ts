@@ -169,10 +169,10 @@ export class PuppyEditor {
 
   public constructor(element: HTMLElement, options: PuppyEditorOptions = {}) {
     const opts = options;
-    opts.editorCondstructionOptions = {
+    opts.editorCondstructionOptions = opts.editorCondstructionOptions || {
       lightbulb: { enabled: true },
       fontSize: this.fontSize,
-    } || opts.editorCondstructionOptions;
+    };
     this.editor = editor.create(element, opts.editorCondstructionOptions);
     if (opts.os) {
       this.os = opts.os;
@@ -363,6 +363,7 @@ export class PuppyEditor {
   */
   public setFontSize(size: number) {
     this.fontSize = size;
+    this.editor.updateOptions({ fontSize: this.fontSize })
   }
 
   /**
