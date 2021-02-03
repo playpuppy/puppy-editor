@@ -1,5 +1,5 @@
 //import { PuppyVM, PuppyCode, PuppyWorld } from './puppyvm/vm';
-import { PuppyViewer } from './playground/viewer';
+import { PuppyViewer } from '../dist/playground/viewer';
 
 const viewer = new PuppyViewer(document.body);
 viewer.setMarkdownDocument(`
