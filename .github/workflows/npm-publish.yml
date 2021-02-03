@@ -5,31 +5,19 @@ name: Node.js Package
 
 on:
   push:
-    branches:
-      - release
     tags:
-      - "!*"
+      - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
-  publish-npm:
+  npm-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - name: install can-npm-publish and dependencies
-        run: |
-          npm install can-npm-publish
-          npm ci
-      - name: check version and add tag
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          REPO: ${{github.repository}}
-          COMMIT: ${{github.sha}}
-        run: ./release.sh
-      - run: npm build
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+        registry-url: 'https://registry.npmjs.org'
+    - run: npm install
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
